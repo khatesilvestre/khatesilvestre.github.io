@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KHATE R. SILVESTRE | Portfolio</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --accent: #e94560;
+            --accent-light: #ff6b81;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #2d2d2d;
+            --text-light: #6c757d;
+            --border: #e9ecef;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            background: var(--primary);
+            color: #fff;
+            padding: 80px 24px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+        }
+
+        @keyframes kenBurnsIn {
+            0%   { transform: scale(1.0); }
+            100% { transform: scale(1.15); }
+        }
+        @keyframes kenBurnsOut {
+            0%   { transform: scale(1.15); }
+            100% { transform: scale(1.0); }
+        }
+
+        .hero-bg img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            transform: scale(1);
+            will-change: transform, opacity;
+        }
+        .hero-bg img.active   { opacity: 1; }
+        .hero-bg img.zoom-in  { animation: kenBurnsIn  5s ease-out forwards; }
+        .hero-bg img.zoom-out { animation: kenBurnsOut 5s ease-out forwards; }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(160deg, rgba(26,26,46,0.82) 0%, rgba(22,33,62,0.78) 40%, rgba(15,52,96,0.82) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .profile-photo {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.3);
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero .tagline {
+            font-size: clamp(0.85rem, 2vw, 1.1rem);
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
+
+        .hero .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+
+        .hero .stat { text-align: center; }
+
+        .hero .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent-light);
+        }
+
+        .hero .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.85;
+            color: #b0b8c8;
+        }
+
+        .contact-bar {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+        }
+
+        .contact-bar a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); }
+
+        .btn-outline { border: 1.5px solid rgba(255,255,255,0.4); color: #fff; }
+        .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+
+        /* ── Sections ── */
+        .section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 24px;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 48px;
+            font-size: 1rem;
+        }
+
+        /* ── Project Grid ── */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 28px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+        }
+
+        /* ── Image Gallery ── */
+        .card-gallery {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #f0f2f5;
+        }
+
+        .card-gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain !important;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            cursor: pointer;
+            pointer-events: none;
+        }
+        .card-gallery img.active { opacity: 1; pointer-events: auto; }
+
+        .gallery-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 2;
+        }
+
+        .gallery-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            transition: background 0.3s;
+        }
+        .gallery-dot.active { background: #fff; }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            background: rgba(0,0,0,0.35);
+            color: #fff;
+            border: none;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .card-gallery:hover .gallery-nav { opacity: 1; }
+
+        @media (max-width: 768px) {
+            .gallery-nav { opacity: 0.7 !important; width: 28px; height: 28px; font-size: 0.9rem; }
+            .lightbox-nav { opacity: 0.8 !important; }
+        }
+
+        .gallery-prev { left: 8px; }
+        .gallery-next { right: 8px; }
+
+        .card-header { padding: 20px 28px 0; }
+        .card-header h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 6px; color: var(--primary); }
+
+        .card-role {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card-body { padding: 0 28px 16px; flex: 1; }
+        .card-body p { font-size: 0.9rem; color: var(--text-light); line-height: 1.6; }
+
+        .card-footer {
+            padding: 14px 28px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .skill-tag {
+            font-size: 0.72rem;
+            padding: 3px 10px;
+            border-radius: 50px;
+            background: #eef2ff;
+            color: #4f46e5;
+            font-weight: 500;
+        }
+
+        .card-date { padding: 0 28px 14px; font-size: 0.76rem; color: var(--text-light); }
+
+        /* ── Featured card ── */
+        .project-card.featured {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .project-card.featured .featured-left { display: flex; flex-direction: column; }
+        .project-card.featured .card-header  { padding: 28px 32px 0; }
+        .project-card.featured .card-body    { padding: 0 32px 16px; }
+        .project-card.featured .card-footer  { padding: 14px 32px; }
+        .project-card.featured .card-date    { padding: 0 32px 16px; }
+
+        .featured-gallery {
+            position: relative;
+            overflow: hidden;
+            min-height: 320px;
+        }
+
+        .featured-gallery img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0; left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            cursor: pointer;
+        }
+        .featured-gallery img.active { opacity: 1; }
+
+        /* ── Skills section ── */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .skills-grid .skill-category {
+            flex: 0 1 260px;
+        }
+
+        .skill-category {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .skill-category h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .skill-category ul { list-style: none; }
+
+        .skill-category li {
+            padding: 4px 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .skill-category li::before {
+            content: '•';
+            color: var(--accent);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+        }
+
+        /* ── CTA ── */
+        .cta {
+            background: linear-gradient(135deg, var(--primary), #0f3460);
+            color: #fff;
+            text-align: center;
+            padding: 60px 24px;
+        }
+
+        .cta h2 { font-size: 1.75rem; margin-bottom: 12px; }
+
+        .cta p {
+            opacity: 0.8;
+            margin-bottom: 28px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* ── Lightbox ── */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92);
+            z-index: 1000;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            cursor: zoom-out;
+        }
+
+        .lightbox.open {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox img {
+            max-width: 95%;
+            width: auto; height: auto;
+            margin: 40px auto;
+            display: block;
+            border-radius: 8px;
+            cursor: default;
+        }
+
+        .lightbox-close {
+            position: fixed;
+            top: 20px; right: 24px;
+            background: rgba(0,0,0,0.6);
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1002;
+            border-radius: 50%;
+            width: 44px; height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-nav {
+            position: fixed;
+            top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 1002;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        .lightbox-nav:hover { background: rgba(255,255,255,0.3); }
+        .lightbox-prev { left: 16px; }
+        .lightbox-next { right: 16px; }
+
+        .lightbox-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 50%; transform: translateX(-50%);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+            z-index: 1002;
+        }
+
+        @media (max-width: 768px) {
+            .project-card.featured { grid-template-columns: 1fr; }
+            .featured-gallery { min-height: 220px; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .hero .stats { gap: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         HERO SECTION
+         Replace all [PLACEHOLDER] values below with your own info.
+    ════════════════════════════════════════════════════════════════ -->
+    <section class="hero">
+        <!-- Background slideshow images — add/remove <img> tags as needed.
+             Put your cover/background images in images/covers/ -->
+        <div class="hero-bg">
+            <img src="images/covers/cover-1.jpg" alt="">
+            <img src="images/covers/cover-2.jpg" alt="">
+            <img src="images/covers/cover-3.jpg" alt="">
+        </div>
+
+        <div class="hero-content">
+            <!-- Profile photo — put your photo at images/profile.jpg -->
+            <img src="images/profile.jpg" alt="KHATE R. SILVESTRE" class="profile-photo">
+
+            <!-- Your full name -->
+            <h1>KHATE R. SILVESTRE</h1>
+
+            <p class="tagline">Xero Bookkeeper | Bank Reconciliation | Financial Reporting | Certified Xero Advisor</p>
+            <p style="font-size: 0.95rem; color: rgba(255,255,255,0.75); margin-top: -12px; margin-bottom: 6px; font-weight: 300; max-width: 640px; margin-left: auto; margin-right: auto;">I help business owners keep their financial records accurate, organized, and easy to understand — all in Xero.</p>
+            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 8px; font-weight: 300; max-width: 640px; margin-left: auto; margin-right: auto;">No messy books. No guesswork. Just clear, up-to-date numbers you can rely on.</p>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value">3+</div>
+                    <div class="stat-label">Xero Training Projects</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">50+</div>
+                    <div class="stat-label">Transactions Recorded</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">6+</div>
+                    <div class="stat-label">Financial Reports Generated</div>
+                </div>
+            </div>
+
+            <!-- CTA buttons — update href values -->
+            <div class="contact-bar">
+                <a href="https://www.onlinejobs.ph/jobseekers/info/4600410" class="btn-primary" target="_blank">Hire Me on OLJ</a>
+                <a href="assets/resume.pdf" class="btn-outline" download>📄 Download CV</a>
+                <a href="mailto:ksilvestresvp@gmail.com" class="btn-outline">✉️ Email Me</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         ABOUT ME SECTION
+    ════════════════════════════════════════════════════════════════ -->
+    <section class="section">
+        <h2 class="section-title">About Me</h2>
+        <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 16px; padding: 36px 40px; line-height: 1.85; color: var(--text);">
+            <p style="margin-bottom: 16px;">I'm a <strong>Xero bookkeeper</strong> with hands-on experience in recording transactions, managing VAT, and generating financial reports.</p>
+            <p style="margin-bottom: 16px;">With a background in <strong>US healthcare client support</strong>, I bring strong communication skills and keen attention to detail to every project.</p>
+            <p>I help business owners maintain <strong>clean and accurate financial records</strong> — so they can focus on growing their business.</p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         CERTIFICATIONS SECTION
+    ════════════════════════════════════════════════════════════════ -->
+    <section class="section">
+        <h2 class="section-title">Certifications</h2>
+        <p class="section-subtitle">Credentials that back my work</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+
+            <div onclick="openCert('images/certificate-xero.png')" style="cursor: pointer; background: #ffffff; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; flex: 0 1 360px; display: block; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                <img src="images/certificate-xero.png" alt="Xero Certified Associate Level 1 — Khate Silvestre" style="width: 100%; display: block; border-radius: 16px 16px 0 0; pointer-events: none;">
+                <div style="padding: 16px 20px;">
+                    <div style="font-weight: 600; color: var(--primary); margin-bottom: 4px;">Xero Certified Associate — Level 1</div>
+                    <div style="font-size: 0.82rem; color: var(--text-light);">Xero &nbsp;·&nbsp; Issued Apr 2026 &nbsp;·&nbsp; Valid until Apr 2027</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         PORTFOLIO / PROJECTS SECTION
+         Duplicate project-card blocks as needed.
+         Featured card spans full width; regular cards fill the grid.
+    ════════════════════════════════════════════════════════════════ -->
+    <section class="section">
+        <h2 class="section-title">Portfolio</h2>
+        <p class="section-subtitle">A selection of my work</p>
+
+        <div class="projects-grid">
+
+            <!-- ── PROJECT 1 ──────────────────────────────────────── -->
+            <div class="project-card">
+                <div class="card-gallery" data-gallery>
+                    <img src="images/projects/project1-1.png" alt="Project 1 Screenshot 1" class="active">
+                    <img src="images/projects/project1-2.png" alt="Project 1 Screenshot 2">
+                    <img src="images/projects/project1-3.png" alt="Project 1 Screenshot 3">
+                    <img src="images/projects/project1-4.png" alt="Project 1 Screenshot 4">
+                    <img src="images/projects/project1-5.png" alt="Project 1 Screenshot 5">
+                    <img src="images/projects/project1-6.png" alt="Project 1 Screenshot 6">
+                    <div class="gallery-dots"></div>
+                    <button class="gallery-nav gallery-prev" onclick="navGallery(this, -1)">&#8249;</button>
+                    <button class="gallery-nav gallery-next" onclick="navGallery(this, 1)">&#8250;</button>
+                </div>
+                <div class="card-header">
+                    <h3>Xero Training Project 1 – Basic Bookkeeping</h3>
+                </div>
+                <div class="card-body">
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 4px 0; font-size: 0.9rem; color: var(--text-light);">&#8226; Recorded owner investment and daily transactions</li>
+                        <li style="padding: 4px 0; font-size: 0.9rem; color: var(--text-light);">&#8226; Categorized income and expenses properly</li>
+                        <li style="padding: 4px 0; font-size: 0.9rem; color: var(--text-light);">&#8226; Generated Profit &amp; Loss and Balance Sheet</li>
+                        <li style="padding: 4px 0; font-size: 0.9rem; color: var(--text-light);">&#8226; Ensured accurate financial data flow</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <span class="skill-tag">Bookkeeping</span>
+                    <span class="skill-tag">Financial Reporting</span>
+                </div>
+            </div>
+
+            <!-- ── PROJECT 2 ──────────────────────────────────────── -->
+            <div class="project-card">
+                <div class="card-gallery" data-gallery>
+                    <img src="images/projects/project2-1.png" alt="Project 2 Screenshot 1" class="active">
+                    <img src="images/projects/project2-2.png" alt="Project 2 Screenshot 2">
+                    <img src="images/projects/project2-3.png" alt="Project 2 Screenshot 3">
+                    <img src="images/projects/project2-4.png" alt="Project 2 Screenshot 4">
+                    <img src="images/projects/project2-5.png" alt="Project 2 Screenshot 5">
+                    <div class="gallery-dots"></div>
+                    <button class="gallery-nav gallery-prev" onclick="navGallery(this, -1)">&#8249;</button>
+                    <button class="gallery-nav gallery-next" onclick="navGallery(this, 1)">&#8250;</button>
+                </div>
+                <div class="card-header">
+                    <h3>Xero Training Project 2 – VAT &amp; Financial Reporting</h3>
+                </div>
+                <div class="card-body">
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 4px 0; font-size: 0.9rem; color: var(--text-light);">&#8226; Processed sales and expenses with VAT (12%)</li>
+                        <li style="padding: 4px 0; font-size: 0.9rem; color: var(--text-light);">&#8226; Created invoices and supplier bills</li>
+                        <li style="padding: 4px 0; font-size: 0.9rem; color: var(--text-light);">&#8226; Handled input and output VAT tracking</li>
+                        <li style="padding: 4px 0; font-size: 0.9rem; color: var(--text-light);">&#8226; Generated Profit &amp; Loss and Balance Sheet</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <span class="skill-tag">VAT Management</span>
+                    <span class="skill-tag">Invoicing</span>
+                </div>
+            </div>
+
+            <!-- ── PROJECT 3 ──────────────────────────────────────── -->
+            <div class="project-card" style="grid-column: 1 / -1; width: calc(50% - 14px); margin: 0 auto;">
+                <div class="card-gallery" data-gallery>
+                    <img src="images/projects/project3-1.png" alt="Project 3 Screenshot 1" class="active">
+                    <img src="images/projects/project3-2.png" alt="Project 3 Screenshot 2">
+                    <img src="images/projects/project3-3.png" alt="Project 3 Screenshot 3">
+                    <img src="images/projects/project3-4.png" alt="Project 3 Screenshot 4">
+                    <img src="images/projects/project3-5.png" alt="Project 3 Screenshot 5">
+                    <img src="images/projects/project3-6.png" alt="Project 3 Screenshot 6">
+                    <img src="images/projects/project3-7.png" alt="Project 3 Screenshot 7">
+                    <div class="gallery-dots"></div>
+                    <button class="gallery-nav gallery-prev" onclick="navGallery(this, -1)">&#8249;</button>
+                    <button class="gallery-nav gallery-next" onclick="navGallery(this, 1)">&#8250;</button>
+                </div>
+                <div class="card-header">
+                    <h3>Xero Training Project 3 – Real-World Scenario</h3>
+                </div>
+                <div class="card-body">
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 4px 0; font-size: 0.9rem; color: var(--text-light);">&#8226; Managed unpaid invoices and accounts receivable</li>
+                        <li style="padding: 4px 0; font-size: 0.9rem; color: var(--text-light);">&#8226; Processed partial payments and tracked remaining balances</li>
+                        <li style="padding: 4px 0; font-size: 0.9rem; color: var(--text-light);">&#8226; Recorded owner withdrawals</li>
+                        <li style="padding: 4px 0; font-size: 0.9rem; color: var(--text-light);">&#8226; Maintained accurate financial records across transactions</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <span class="skill-tag">Accounts Receivable</span>
+                    <span class="skill-tag">Bank Reconciliation</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SKILLS SECTION
+         Add/remove skill-category blocks and update the list items.
+    ════════════════════════════════════════════════════════════════ -->
+    <section class="section">
+        <h2 class="section-title">Skills &amp; Tools</h2>
+        <p class="section-subtitle">Technologies and expertise I bring to every project</p>
+
+        <div class="skills-grid">
+
+            <div class="skill-category">
+                <h4>Bookkeeping Skills</h4>
+                <ul>
+                    <li>Bank Reconciliation</li>
+                    <li>Accounts Payable &amp; Receivable</li>
+                    <li>VAT Handling</li>
+                    <li>Financial Reporting</li>
+                    <li>Transaction Recording</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h4>Tools</h4>
+                <ul>
+                    <li>Xero</li>
+                    <li>Microsoft Excel</li>
+                    <li>Google Sheets</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h4>Soft Skills</h4>
+                <ul>
+                    <li>Attention to Detail</li>
+                    <li>Organization</li>
+                    <li>Communication</li>
+                    <li>Time Management</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SERVICES SECTION
+    ════════════════════════════════════════════════════════════════ -->
+    <section class="section">
+        <h2 class="section-title">Services</h2>
+        <p class="section-subtitle">What I can do for your business</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+            <div style="display: flex; align-items: center; gap: 14px; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 20px 28px; flex: 0 1 460px;">
+                <div style="width: 42px; height: 42px; border-radius: 50%; background: #eef2ff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.2rem;">📒</div>
+                <div>
+                    <div style="font-weight: 600; color: var(--primary); margin-bottom: 2px;">Xero Bookkeeping Setup</div>
+                    <div style="font-size: 0.85rem; color: var(--text-light);">Get your Xero account organized and ready to use from day one.</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 14px; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 20px 28px; flex: 0 1 460px;">
+                <div style="width: 42px; height: 42px; border-radius: 50%; background: #eef2ff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.2rem;">🏦</div>
+                <div>
+                    <div style="font-weight: 600; color: var(--primary); margin-bottom: 2px;">Bank Reconciliation</div>
+                    <div style="font-size: 0.85rem; color: var(--text-light);">Match your bank statements with your books to keep records accurate.</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 14px; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 20px 28px; flex: 0 1 460px;">
+                <div style="width: 42px; height: 42px; border-radius: 50%; background: #eef2ff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.2rem;">📋</div>
+                <div>
+                    <div style="font-weight: 600; color: var(--primary); margin-bottom: 2px;">Data Entry &amp; Transaction Recording</div>
+                    <div style="font-size: 0.85rem; color: var(--text-light);">Accurate and timely recording of all your business transactions.</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 14px; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 20px 28px; flex: 0 1 460px;">
+                <div style="width: 42px; height: 42px; border-radius: 50%; background: #eef2ff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.2rem;">📊</div>
+                <div>
+                    <div style="font-weight: 600; color: var(--primary); margin-bottom: 2px;">Financial Report Preparation</div>
+                    <div style="font-size: 0.85rem; color: var(--text-light);">Generate Profit &amp; Loss statements and Balance Sheets when you need them.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         WHAT YOU CAN EXPECT SECTION
+    ════════════════════════════════════════════════════════════════ -->
+    <section class="section">
+        <h2 class="section-title" style="margin-bottom: 48px;">What You Can Expect When Working With Me</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+            <div style="display: flex; align-items: center; gap: 12px; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 16px 24px; flex: 0 1 460px;">
+                <span style="color: #22c55e; font-size: 1.2rem; flex-shrink: 0;">&#10004;</span>
+                <span style="font-size: 0.95rem; color: var(--text);">Accurate and organized financial records</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 16px 24px; flex: 0 1 460px;">
+                <span style="color: #22c55e; font-size: 1.2rem; flex-shrink: 0;">&#10004;</span>
+                <span style="font-size: 0.95rem; color: var(--text);">On-time reporting and updates</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 16px 24px; flex: 0 1 460px;">
+                <span style="color: #22c55e; font-size: 1.2rem; flex-shrink: 0;">&#10004;</span>
+                <span style="font-size: 0.95rem; color: var(--text);">Clear and professional communication</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 16px 24px; flex: 0 1 460px;">
+                <span style="color: #22c55e; font-size: 1.2rem; flex-shrink: 0;">&#10004;</span>
+                <span style="font-size: 0.95rem; color: var(--text);">Accurate handling of VAT and financial transactions</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         CTA SECTION
+    ════════════════════════════════════════════════════════════════ -->
+    <section class="cta">
+        <h2>Let's Work Together</h2>
+        <p>I'm available for bookkeeping support and ready to help you keep your finances organized and accurate.</p>
+        <a href="https://www.onlinejobs.ph/jobseekers/info/4600410" class="btn-primary" style="display: inline-block; font-size: 1rem; padding: 14px 36px; font-weight: 700; letter-spacing: 0.3px;" target="_blank">Hire Me on OnlineJobs.ph</a>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         FOOTER — update year and name
+    ════════════════════════════════════════════════════════════════ -->
+    <footer class="footer">
+        <p>&copy; 2026 KHATE R. SILVESTRE &mdash; All Rights Reserved</p>
+    </footer>
+
+    <!-- Lightbox overlay -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1)">&#8249;</button>
+        <button class="lightbox-nav lightbox-next" onclick="navLightbox(1)">&#8250;</button>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <script>
+        // ── Gallery initialisation ──────────────────────────────────
+        document.querySelectorAll('[data-gallery]').forEach(gallery => {
+            const imgs = gallery.querySelectorAll('img');
+            const dotsContainer = gallery.querySelector('.gallery-dots');
+            if (!dotsContainer || imgs.length <= 1) return;
+
+            imgs.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+                dot.onclick = e => { e.stopPropagation(); goToSlide(gallery, i); };
+                dotsContainer.appendChild(dot);
+            });
+        });
+
+        function goToSlide(gallery, index) {
+            const imgs = gallery.querySelectorAll('img');
+            const dots = gallery.querySelectorAll('.gallery-dot');
+            imgs.forEach(img => img.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            imgs[index].classList.add('active');
+            if (dots[index]) dots[index].classList.add('active');
+        }
+
+        function navGallery(btn, dir) {
+            event.stopPropagation();
+            const gallery = btn.closest('[data-gallery]');
+            const imgs = gallery.querySelectorAll('img');
+            const current = Array.from(imgs).findIndex(img => img.classList.contains('active'));
+            let next = current + dir;
+            if (next < 0) next = imgs.length - 1;
+            if (next >= imgs.length) next = 0;
+            goToSlide(gallery, next);
+        }
+
+        // ── Lightbox ───────────────────────────────────────────────
+        let lbImages = [], lbIndex = 0;
+
+        document.querySelectorAll('[data-gallery] img').forEach(img => {
+            img.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const gallery = this.closest('[data-gallery]');
+                lbImages = Array.from(gallery.querySelectorAll('img')).map(i => i.src);
+                lbIndex = lbImages.indexOf(this.src);
+                if (lbIndex === -1) lbIndex = 0;
+                showLightboxImage();
+                document.getElementById('lightbox').classList.add('open');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function showLightboxImage() {
+            document.getElementById('lightbox-img').src = lbImages[lbIndex];
+            document.getElementById('lightbox-counter').textContent =
+                (lbIndex + 1) + ' / ' + lbImages.length;
+            document.getElementById('lightbox').scrollTop = 0;
+        }
+
+        function navLightbox(dir) {
+            event.stopPropagation();
+            lbIndex += dir;
+            if (lbIndex < 0) lbIndex = lbImages.length - 1;
+            if (lbIndex >= lbImages.length) lbIndex = 0;
+            showLightboxImage();
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', e => {
+            const lb = document.getElementById('lightbox');
+            if (!lb.classList.contains('open')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); navLightbox(1); }
+            if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); navLightbox(-1); }
+        });
+
+        // ── Touch swipe for card galleries ─────────────────────────
+        document.querySelectorAll('[data-gallery]').forEach(gallery => {
+            let startX = 0, startY = 0;
+            gallery.addEventListener('touchstart', e => {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            }, { passive: true });
+            gallery.addEventListener('touchend', e => {
+                const distX = e.changedTouches[0].clientX - startX;
+                const distY = e.changedTouches[0].clientY - startY;
+                if (Math.abs(distX) > 40 && Math.abs(distX) > Math.abs(distY)) {
+                    const imgs = gallery.querySelectorAll('img');
+                    const current = Array.from(imgs).findIndex(img => img.classList.contains('active'));
+                    let next = distX < 0 ? current + 1 : current - 1;
+                    if (next < 0) next = imgs.length - 1;
+                    if (next >= imgs.length) next = 0;
+                    goToSlide(gallery, next);
+                }
+            }, { passive: true });
+        });
+
+        // ── Open single image in lightbox (certificates) ───────────
+        function openCert(src) {
+            lbImages = [src];
+            lbIndex = 0;
+            showLightboxImage();
+            document.getElementById('lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // ── Touch swipe for lightbox ────────────────────────────────
+        (function() {
+            const lb = document.getElementById('lightbox');
+            let startX = 0;
+            lb.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+            lb.addEventListener('touchend', e => {
+                const distX = e.changedTouches[0].clientX - startX;
+                if (Math.abs(distX) > 50) navLightbox(distX < 0 ? 1 : -1);
+            }, { passive: true });
+        })();
+
+        // ── Hero background slideshow with Ken Burns zoom ──────────
+        (function() {
+            const bgImgs = document.querySelectorAll('.hero-bg img');
+            if (bgImgs.length <= 1) { if (bgImgs[0]) bgImgs[0].classList.add('active'); return; }
+            let current = 0, zoomIn = true;
+            bgImgs[0].classList.add('active', 'zoom-in');
+            setInterval(() => {
+                const prev = current;
+                current = (current + 1) % bgImgs.length;
+                zoomIn = !zoomIn;
+                bgImgs[current].classList.add(zoomIn ? 'zoom-in' : 'zoom-out');
+                bgImgs[current].classList.add('active');
+                bgImgs[prev].classList.remove('active');
+                setTimeout(() => bgImgs[prev].classList.remove('zoom-in', 'zoom-out'), 2000);
+            }, 5000);
+        })();
+    </script>
+</body>
+</html>
