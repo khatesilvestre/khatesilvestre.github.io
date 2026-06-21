@@ -170,10 +170,20 @@
 
         .section-title {
             font-size: 1.75rem;
-            font-weight: 700;
+            font-weight: 800;
             text-align: center;
-            margin-bottom: 12px;
+            margin-bottom: 0;
             color: var(--primary);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 48px;
+            height: 3px;
+            background: var(--accent);
+            margin: 10px auto 16px;
+            border-radius: 2px;
         }
 
         .section-subtitle {
@@ -182,6 +192,18 @@
             margin-bottom: 48px;
             font-size: 1rem;
         }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 50px;
+            letter-spacing: 0.5px;
+            margin-top: 6px;
+        }
+        .badge-xero { background: #d1fae5; color: #065f46; }
+        .badge-qbo  { background: #dbeafe; color: #1e40af; }
 
         /* ── Project Grid ── */
         .projects-grid {
@@ -554,6 +576,7 @@
     <!-- ═══════════════════════════════════════════════════════════════
          CERTIFICATIONS SECTION
     ════════════════════════════════════════════════════════════════ -->
+    <div style="background: #ffffff;">
     <section class="section">
         <h2 class="section-title">Certifications</h2>
         <p class="section-subtitle">Credentials that back my work</p>
@@ -577,6 +600,7 @@
 
         </div>
     </section>
+    </div>
 
     <!-- ═══════════════════════════════════════════════════════════════
          PORTFOLIO / PROJECTS SECTION
@@ -604,6 +628,7 @@
                 </div>
                 <div class="card-header">
                     <h3>Xero Training Project 1 – Basic Bookkeeping</h3>
+                    <span class="badge badge-xero">Xero</span>
                 </div>
                 <div class="card-body">
                     <ul style="list-style: none; padding: 0; margin: 0;">
@@ -633,6 +658,7 @@
                 </div>
                 <div class="card-header">
                     <h3>Xero Training Project 2 – VAT &amp; Financial Reporting</h3>
+                    <span class="badge badge-xero">Xero</span>
                 </div>
                 <div class="card-body">
                     <ul style="list-style: none; padding: 0; margin: 0;">
@@ -664,6 +690,7 @@
                 </div>
                 <div class="card-header">
                     <h3>Xero Training Project 3 – Real-World Scenario</h3>
+                    <span class="badge badge-xero">Xero</span>
                 </div>
                 <div class="card-body">
                     <ul style="list-style: none; padding: 0; margin: 0;">
@@ -686,6 +713,7 @@
          SKILLS SECTION
          Add/remove skill-category blocks and update the list items.
     ════════════════════════════════════════════════════════════════ -->
+    <div style="background: #ffffff;">
     <section class="section">
         <h2 class="section-title">Skills &amp; Tools</h2>
         <p class="section-subtitle">Technologies and expertise I bring to every project</p>
@@ -724,6 +752,7 @@
 
         </div>
     </section>
+    </div>
 
     <!-- ═══════════════════════════════════════════════════════════════
          SERVICES SECTION
@@ -766,8 +795,9 @@
     <!-- ═══════════════════════════════════════════════════════════════
          WHAT YOU CAN EXPECT SECTION
     ════════════════════════════════════════════════════════════════ -->
+    <div style="background: #ffffff;">
     <section class="section">
-        <h2 class="section-title" style="margin-bottom: 48px;">What You Can Expect When Working With Me</h2>
+        <h2 class="section-title">What You Can Expect When Working With Me</h2>
         <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
             <div style="display: flex; align-items: center; gap: 12px; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 16px 24px; flex: 0 1 460px;">
                 <span style="color: #22c55e; font-size: 1.2rem; flex-shrink: 0;">&#10004;</span>
@@ -787,6 +817,7 @@
             </div>
         </div>
     </section>
+    </div>
 
     <!-- ═══════════════════════════════════════════════════════════════
          CTA SECTION
